@@ -6,6 +6,14 @@ class DishDetail extends Component {
     constructor(props) {
         super(props)
     }
+    componentDidMount(){
+      console.log('DishDetail componentDidMount invoked');
+     }
+
+   componentDidUpdate(){
+
+       console.log('DishDetail componentDidUpdate invoked');
+   }
 
     renderDish(dish) {
         return (
@@ -62,6 +70,7 @@ class DishDetail extends Component {
   
 
     render() {
+        console.log('DishDetailComponent render invoked');
         if (this.props.dish) {
             return (
             <div className="container">

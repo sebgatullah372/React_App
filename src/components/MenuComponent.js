@@ -7,10 +7,12 @@ class Menu extends Component {
     constructor(props) {
         super(props);
 
-       
+      console.log('Menu constructor invoked'); 
     }
 
-   
+   componentDidMount(){
+   	console.log('Menu componentDidMount invoked');
+   }
 
     render() {
         const menu = this.props.dishes.map(dish => {
@@ -25,6 +27,7 @@ class Menu extends Component {
                 </div>
             )
         });
+        console.log('Menu render invoked');
 
         return (
             <div className="container">
