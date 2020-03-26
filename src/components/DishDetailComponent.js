@@ -48,13 +48,8 @@ import { Link } from 'react-router-dom';
         );
 
 
-
-
     }
 
-
-
-    
   
 
     const DishDetail = (props)=> {
