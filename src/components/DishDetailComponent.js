@@ -3,7 +3,7 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle,Breadcrumb
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import {Modal, ModalHeader, ModalBody, Button, Row, Col, Label} from 'reactstrap';
-
+import { Loading } from './LoadingComponent';
 
    function RenderDish({dish}) {
         return (
@@ -56,8 +56,31 @@ import {Modal, ModalHeader, ModalBody, Button, Row, Col, Label} from 'reactstrap
   
 
     const DishDetail = (props)=> {
+
+        if(props.isLoading){
+
+            return(
+             <div className="container">
+                    <div className="row">            
+                        <Loading />
+                    </div>
+                </div>
+            );
+
+
+        }
+        else if(props.errMess){
+
+            return(
+             <div className="container">
+                    <div className="row">            
+                        <h4>{props.errMess}</h4>
+                    </div>
+                </div>
+            );
+        }
         
-        if (props.dish) {
+        else if (props.dish) {
             return (
             <div className="container">
             <div className="row">
