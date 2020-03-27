@@ -17,7 +17,7 @@ import {Modal, ModalHeader, ModalBody, Button, Row, Col, Label} from 'reactstrap
         );
     }
 
-    function RenderComments({comments}){
+     function RenderComments({comments, addComment, dishId}) {
 
         var commentList = comments.map(comment =>{
             return(
@@ -42,7 +42,7 @@ import {Modal, ModalHeader, ModalBody, Button, Row, Col, Label} from 'reactstrap
             {commentList}
 
             </ul>
-            <CommentForm/>
+            <CommentForm dishId={dishId} addComment={addComment} />
 
 
         </div>
@@ -76,7 +76,10 @@ import {Modal, ModalHeader, ModalBody, Button, Row, Col, Label} from 'reactstrap
                        <RenderDish dish= {props.dish}/>
                     </div>
                     <div className="col-12 col-md-5 m-1">
-                        <RenderComments comments={props.comments}/>
+                        <RenderComments comments={props.comments}
+        addComment={props.addComment}
+        dishId={props.dish.id}
+      />
                     </div>
                     
                 </div>
@@ -110,8 +113,7 @@ export class CommentForm extends Component{
         this.toggleModal = this.toggleModal.bind(this);
     }
       handleSubmit(values) {
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
         
     }
     toggleModal() {
@@ -150,7 +152,7 @@ export class CommentForm extends Component{
                                 <Col md={10}>
                                    <Label htmlFor="name" md={4}><span>Your Name</span></Label>
                                 
-                                    <Control.text model=".name" id="name" name="name"
+                                    <Control.text model=".author" id="author" name="author"
                                         placeholder="Your Name"
                                         className="form-control"
                                         validators={{
