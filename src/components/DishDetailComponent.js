@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle,Breadcrumb, BreadcrumbItem  } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Control, LocalForm, Errors } from 'react-redux-form';
+import {Modal, ModalHeader, ModalBody, Button, Row, Col, Label} from 'reactstrap';
 
 
    function RenderDish({dish}) {
@@ -40,6 +42,7 @@ import { Link } from 'react-router-dom';
             {commentList}
 
             </ul>
+            <CommentForm/>
 
 
         </div>
@@ -89,3 +92,115 @@ import { Link } from 'react-router-dom';
 
 
 export default DishDetail; 
+
+
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => val && (val.length >= len);
+
+export class CommentForm extends Component{
+    
+    constructor(props){
+
+        super(props);
+        this.state = {
+          isModalOpen: false
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+    }
+      handleSubmit(values) {
+        console.log('Current State is: ' + JSON.stringify(values));
+        alert('Current State is: ' + JSON.stringify(values));
+        
+    }
+    toggleModal() {
+        this.setState({
+          isModalOpen: !this.state.isModalOpen
+        });
+      }
+
+    render(){
+        return(
+            <div>
+            <Button outline onClick={this.toggleModal}><span className="fa fa-pencil fa-lg"></span>Submit Comment</Button>
+
+                <div className="row row-content">
+                    <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                        <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
+
+                        <ModalBody>
+                           <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+
+                           <Row className="form-group">
+                                
+                              <Col md={10}>
+                                <Label htmlFor="rating"><span>Rating</span></Label>
+                                    <Control.select model=".rating" name="rating"
+                                        className="form-control">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </Control.select>
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Col md={10}>
+                                   <Label htmlFor="name" md={4}><span>Your Name</span></Label>
+                                
+                                    <Control.text model=".name" id="name" name="name"
+                                        placeholder="Your Name"
+                                        className="form-control"
+                                        validators={{
+                                            required, minLength: minLength(3), maxLength: maxLength(15)
+                                        }}
+                                         />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".name"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required',
+                                            minLength: 'Must be greater than 2 characters',
+                                            maxLength: 'Must be 15 characters or less'
+                                        }}
+                                     />
+                                </Col>
+                            </Row>
+                           
+                            
+                            
+                            <Row className="form-group">
+                                
+                                <Col md={10}>
+                                <Label htmlFor="comment" md={4}><span>Comment</span></Label>
+                                    <Control.textarea model=".comment" id="comment" name="comment"
+                                        rows="6"
+                                        className="form-control" />
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Col md={{size:10}}>
+                                    <Button type="submit" color="primary">
+                                     Submit
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </LocalForm>
+
+
+                        </ModalBody>
+
+                    </Modal>
+
+                </div>
+
+            </div>
+
+            
+            );
+    }
+
+}
