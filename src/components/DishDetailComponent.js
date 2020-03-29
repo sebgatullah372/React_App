@@ -57,8 +57,11 @@ import { FadeTransform, Fade, Stagger } from 'react-animation-components';
               
 
             <ul className="list-unstyled">
+            <Stagger in>
 
             {commentList}
+
+            </Stagger>
 
             </ul>
 
