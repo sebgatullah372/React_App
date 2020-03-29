@@ -6,8 +6,17 @@ import {Modal, ModalHeader, ModalBody, Button, Row, Col, Label} from 'reactstrap
 import { Loading } from './LoadingComponent';
 import {baseUrl} from '../shared/baseUrl';
 
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
+
+
    function RenderDish({dish}) {
         return (
+
+            <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
             <Card>
                 <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
                 <CardBody>
@@ -15,13 +24,17 @@ import {baseUrl} from '../shared/baseUrl';
                     <CardText>{dish.description}</CardText>
                 </CardBody>
             </Card>
+            </FadeTransform>
         );
     }
 
      function RenderComments({comments, postComment, dishId}) {
-
+       
         var commentList = comments.map(comment =>{
+
             return(
+                <Fade in>
+            
                 <li key={comment.id}>
                        {comment.comment}
                        <br/><br/>
@@ -29,20 +42,27 @@ import {baseUrl} from '../shared/baseUrl';
                     
 
                 </li>
+            
+               </Fade>
 
                 );
-
+            
         });
+        
 
         return(
         <div>
             <h4>Comments</h4>
+            
+              
 
             <ul className="list-unstyled">
 
             {commentList}
 
             </ul>
+
+            
             <CommentForm dishId={dishId} postComment={postComment} />
 
 
